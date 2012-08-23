@@ -5,9 +5,13 @@ class CorpusReader:
   This class gives access to the paralysis files in the paralysis format.
   """
   
-  def __init__(self):
+##############################################################################
+  
+  def __init__(self,file):
     
-    pass
+    self.read_file(file)
+  
+##############################################################################
   
   def read_file(self,file):
     """
@@ -31,8 +35,9 @@ class CorpusReader:
             pass
           
     self.pars = contents
+    
+##############################################################################
           
 if __name__ == '__main__':
   
-  c = CorpusReader()
-  c.read_file("/Users/thommy/Documents/Bible/PBC/corpus/deu-elberfelder_1905.pbt")
+  c = CorpusReader("/Users/thommy/Documents/Bible/PBC/corpus/deu-elberfelder_1905.pbt")
