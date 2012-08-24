@@ -1,4 +1,4 @@
-
+import os
 
 class CorpusReader:
   """
@@ -7,9 +7,9 @@ class CorpusReader:
   
 ##############################################################################
   
-  def __init__(self,file):
+  def __init__(self,path):
     
-    self.read_file(file)
+    self.path = path
   
 ##############################################################################
   
@@ -34,10 +34,28 @@ class CorpusReader:
           except ValueError:
             pass
           
-    self.pars = contents
+    return contents
     
+##############################################################################
+
+  def read_texts(self):
+    """
+    This method reads all the files in the specified folder and collects the
+    parallel texts in a list of tuples.
+    """
+    
+    corpus_files = [f for f in os.listdir(self.path) if f.endswith(".txt")]
+    
+    self.texts = list()
+    
+    for corpus_file in corpus_files:
+      curr_text = self.read_file(self.path + corpus_file)
+      self.texts.append((corpus_file[:-4],curr_text))
+    
+
 ##############################################################################
           
 if __name__ == '__main__':
   
-  c = CorpusReader("/Users/thommy/Documents/Bible/PBC/corpus/deu-elberfelder_1905.pbt")
+  c = CorpusReader("../../../Tools/UDHR/data/par/")
+  c.read_texts()
