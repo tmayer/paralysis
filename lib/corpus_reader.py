@@ -27,7 +27,7 @@ class CorpusReader:
       lines = input_file.readlines()
       for line in lines:
         line = line.strip()
-        if not line.startswith("#"): # ignore comments
+        if not line[0] == "#": # ignore comments
           try:
             id,text = line.split("\t",2)
             contents.append((id,text))
