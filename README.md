@@ -1,5 +1,4 @@
-PARALYSIS 
-(Parallel text analysis library)
+PARALYSIS (Parallel text analysis)
 =========
 
 Author: Thomas Mayer (Research Unit: Quantitative Language Comparison, Philipps-University of Marburg)
