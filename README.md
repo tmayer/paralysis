@@ -8,5 +8,5 @@ Paralysis is a Python 3 library for analyzing parallel texts from the parallelte
 Dependencies
 -
 
-* Numpy ([http://numpy.org/])
-* Scipy ([http://scipy.org/])
+* Numpy (http://numpy.org/)
+* Scipy (http://scipy.org/)
