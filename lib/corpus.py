@@ -1,15 +1,21 @@
 import os
 
-class CorpusReader:
+class Corpus:
   """
   This class gives access to the paralysis files in the paralysis format.
   """
   
 ##############################################################################
   
-  def __init__(self,path):
+  def __init__(self,path=""):
     
-    self.path = path
+    if os.path.isdir(path):
+        self.path = path
+    # check for Paralleltext bibles
+    else:
+        self.path = "/Users/thommy/paralleltext.info/v0.52/clean/"
+
+    self.get_texts()
   
 ##############################################################################
   
@@ -51,11 +57,44 @@ class CorpusReader:
     for corpus_file in corpus_files:
       curr_text = self.read_file(self.path + corpus_file)
       self.texts.append((corpus_file[:-4],curr_text))
+      
+##############################################################################
+
+  def get_texts(self):
+    """
+    This method reads all the files in the specified folder and collects the
+    parallel texts in a list of tuples.
+    """
+    
+    self.texts  = [f for f in os.listdir(self.path) if f[-4:] == ".txt"]
+    
+##############################################################################
+
+  def show_texts(self):
+    """
+    This method prints all texts of the corpus_reader object.
+    """
+    
+    texts = [t[:3] + t[11:-4] for t in self.texts]
+    
+    for count,text in enumerate(sorted(texts)):
+        print("{:>3}: {}".format(count+1,text))
+    
+    #print("".join(texts))
+    
+##############################################################################
+
+  def __len__(self):
+    """
+    This method returns the number of texts in the corpus object.
+    """
+    
+    return len(self.texts)
     
 
 ##############################################################################
           
 if __name__ == '__main__':
   
-  c = CorpusReader("../../../Tools/UDHR/data/par/")
-  c.read_texts()
+  c = Corpus()
+  c.show_texts()
