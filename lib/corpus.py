@@ -17,30 +17,7 @@ class Corpus:
 
     self.get_texts()
   
-##############################################################################
-  
-  def read_file(self,file):
-    """
-    This method reads a file and stores its content in a tuple with
-    1. the ID as the first element and
-    2. the text as the second element.
-    Comment lines marked with a hash '#' as the first symbol are ignored.
-    """
-    
-    contents = list()
-    
-    with open(file) as input_file:
-      lines = input_file.readlines()
-      for line in lines:
-        line = line.strip()
-        if not line[0] == "#": # ignore comments
-          try:
-            id,text = line.split("\t",2)
-            contents.append((id,text))
-          except ValueError:
-            pass
-          
-    return contents
+
     
 ##############################################################################
 
@@ -66,7 +43,8 @@ class Corpus:
     parallel texts in a list of tuples.
     """
     
-    self.texts  = [f for f in os.listdir(self.path) if f[-4:] == ".txt"]
+    self.texts  = {count+1:f for count,f in 
+                    enumerate(os.listdir(self.path)) if f[-4:] == ".txt"}
     
 ##############################################################################
 
@@ -75,10 +53,10 @@ class Corpus:
     This method prints all texts of the corpus_reader object.
     """
     
-    texts = [t[:3] + t[11:-4] for t in self.texts]
+    texts = [(t,self.texts[t][:3] + self.texts[t][11:-4]) for t in self.texts]
     
-    for count,text in enumerate(sorted(texts)):
-        print("{:>3}: {}".format(count+1,text))
+    for nr,text in sorted(texts):
+        print("{:>3}: {}".format(nr,text))
     
     #print("".join(texts))
     
@@ -93,6 +71,42 @@ class Corpus:
     
 
 ##############################################################################
+# class TEXT
+##############################################################################
+
+class Text:
+    """
+    This class provides all necessary functionalities to access the parallel
+    text from the corpus.
+    """
+    
+    def __init__(self,file_name):
+        
+##############################################################################
+  
+  def read_file(self,file_name):
+    """
+    This method reads a file and stores its content in a tuple with
+    1. the ID as the first element and
+    2. the text as the second element.
+    Comment lines marked with a hash '#' as the first symbol are ignored.
+    """
+    
+    contents = list()
+    
+    with open(file_name) as input_file:
+      lines = input_file.readlines()
+      for line in lines:
+        line = line.strip()
+        if not line[0] == "#": # ignore comments
+          try:
+            id,text = line.split("\t",2)
+            contents.append((id,text))
+          except ValueError:
+            pass
+          
+    return contents
+        
           
 if __name__ == '__main__':
   
